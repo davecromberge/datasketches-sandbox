@@ -73,8 +73,13 @@ docker build -f docker/GraalDockerfile -t datasketches-sandbox/graalvm-native-im
 
 2. Run the `nativeImage` task from sbt. The result will be a Linux executable. 
 
-# Builds the lightweight docker image locally
+3. Build the lightweight docker image locally
+
+<pre>
+
 docker build -f docker/SandboxDockerfile -t datasketches-sandbox/ds-sandbox-server .
+
+</pre>
 
 # Running in Docker
 
