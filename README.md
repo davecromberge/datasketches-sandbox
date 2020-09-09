@@ -61,26 +61,6 @@ For comparison purposes, any of the above URLs can have the ?exact flag set to p
 count distinct.  Uploading large input streams can be twice as slow on the exact endpoints, whereas
 the sketches grow sub-linearly in relation to the input data size.
 
-# Building a Linux executable
-
-1. Build the Docker image in the `docker` directory
-
-<pre>
-
-docker build -f docker/GraalDockerfile -t datasketches-sandbox/graalvm-native-image .
-
-</pre>
-
-2. Run the `nativeImage` task from sbt. The result will be a Linux executable. 
-
-3. Build the lightweight docker image locally
-
-<pre>
-
-docker build -f docker/SandboxDockerfile -t datasketches-sandbox/ds-sandbox-server .
-
-</pre>
-
 # Running in Docker
 
 <pre>
@@ -102,13 +82,32 @@ docker stop <container-id>
 
 By default, the sketch nominal entries setting is 2^16, and affects the accuracy of the final estimate.
 
-To alter the default, run the docker image with a different default:
+To alter the defaults, run the docker image with the relevant environment variables set:
 
 <pre>
 
 docker run -d --env SKETCH_ACCURACY=12 -p 8099:8080/tcp datasketches-sandbox/ds-sandbox-server
 
 </pre>
+
+# Building a Linux executable
+
+1. Build the Docker image in the `docker` directory
+
+<pre>
+
+docker build -f docker/GraalDockerfile -t datasketches-sandbox/graalvm-native-image .
+
+</pre>
+
+2. Run the `nativeImage` task from sbt. The result will be a Linux executable. 
+
+3. Build the lightweight docker image locally
+
+<pre>
+
+docker build -f docker/SandboxDockerfile -t datasketches-sandbox/ds-sandbox-server .
+
 
 # Acknowledgements
 
