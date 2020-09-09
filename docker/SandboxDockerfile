@@ -1,0 +1,5 @@
+FROM alpine:3.11.3
+COPY out/ds-sandbox-server /opt/datasketches-sandbox/ds-sandbox-server
+RUN chmod +x /opt/datasketches-sandbox/ds-sandbox-server
+EXPOSE 8080
+ENTRYPOINT ["/opt/datasketches-sandbox/ds-sandbox-server"]

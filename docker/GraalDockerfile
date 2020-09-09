@@ -1,0 +1,9 @@
+# To build this image, run:
+#
+#   docker build -t datasketches-sandbox/graalvm-native-image .
+#
+ARG GRAAL_VERSION=20.1.0-java11
+FROM oracle/graalvm-ce:${GRAAL_VERSION}
+WORKDIR /opt/native-image
+RUN gu install native-image
+ENTRYPOINT ["native-image"]
