@@ -2,14 +2,18 @@
 
 [Apache Datasketches](https://datasketches.apache.org/) is a software library of stochastic streaming algorithms.
 
-This repository provides a simple HTTP interface to evaluate datasketches on your own data.  Datasketches is order insensitive
-to input data and only has to see a data item once ("one touch").
+This repository provides a simple HTTP interface to evaluate datasketches on your own data.
 
 For large datasets, the following problems are typically difficult to measure exactly using limited resources:
 - distinct count
 - quantiles and histograms
 - frequent items 
 - reservoir sampling
+
+Datasketches makes use of sketches with mathematically proven error bounds to provide robust solutions to these problems.  Moreover, it is order insensitive
+to input data and only has to see a data item once ("one touch") making it ideal for streaming and big data use cases.
+
+# Usage notes
 
 The service maintains a stateful in-memory sketch/exact copy for each dataset, which can be periodically interrogated for approximate results.
 This stateful operation allows set operations between sketches.
@@ -36,6 +40,23 @@ occupation-surgeon-tx
 </pre>
 
 Finally, see the useful helper scripts in the `scripts` directory.
+
+# Running in Docker
+
+<pre>
+
+# Starts the published container from Github container service
+docker run -d -p 8099:8080/tcp ghcr.io/davecromberge/datasketches-sandbox/ds-sandbox-server:latest
+→ container-id
+
+# Tests the container
+curl -X GET http://0.0.0.0:8099/ping
+→ pong
+
+# Stops the container
+docker stop container-id
+
+</pre>
 
 # Distinct count
 
@@ -81,23 +102,6 @@ curl -X DELETE http://127.0.0.1:8099/v1/distinct/count/country-us
 For comparison purposes, any of the above URLs can have the `?exact` flag set to perform an exact
 count distinct.  Uploading large input streams to the exact endpoints can be orders of magnitude slower,
 whereas the sketches grow sub-linearly in relation to the input data size.
-
-# Running in Docker
-
-<pre>
-
-# Starts the published container from Github container service
-docker run -d -p 8099:8080/tcp ghcr.io/davecromberge/datasketches-sandbox/ds-sandbox-server:latest
-→ container-id
-
-# Tests the container
-curl -X GET http://0.0.0.0:8099/ping
-→ pong
-
-# Stops the container
-docker stop container-id
-
-</pre>
 
 # Environment variables
 
